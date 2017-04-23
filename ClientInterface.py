@@ -1,4 +1,5 @@
 from TCPCommandLineServer import TCPCommandLineServer
+import Config
 import InstanceRegistry
 import threading
 import logging
@@ -84,6 +85,7 @@ class ClientInterface(object):
 		if extra_info!=None and len(extra_info)>255:
 			return None
 		
+		timeout = min(max(timeout,Config.instance_timeout_min),Config.instance_timeout_max)
 		end_of_life = time.time() + timeout/1000.0
 		InstanceRegistry.update_local_instance(cluster,instance_id,end_of_life,extra_info)
 		
