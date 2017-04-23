@@ -338,7 +338,7 @@ instance-timeout-min: 500
 instance-timeout-max: 600000
 announcement-interval-min: 500
 announcement-interval-max: 10000
-client-port: 12345
+client-port: 8720
 
 [udp]
 port: 8721
@@ -351,9 +351,9 @@ broadcast: eth0:192.0.2.255
 
 [udp-multicast]
 port: 8721
-multicast eth0:224.1.1.1
-multicast *:224.1.1.1
-multicast eth0:ff02::1
+multicast: eth0:224.1.1.1
+multicast: *:224.1.1.1
+multicast: eth0:ff02::1
 
 [tcp]
 port: 8721
