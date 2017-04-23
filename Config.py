@@ -58,6 +58,12 @@ def validate_ip(s):
 		return None
 	elif (":" not in s) and ("." not in s):
 		return None
+	if ":" not in s:
+		#ipv4, easy check for hostname
+		if s[0] in string.ascii_letters:
+			return None
+		if s[-1] in string.ascii_letters:
+			return None
 	return s
 
 
