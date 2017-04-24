@@ -1,5 +1,6 @@
 import Config
 import getifaddrs
+import AnnouncementHandler
 import socket
 import logging
 import string
@@ -21,8 +22,11 @@ broadcast_socket = None
 broadcast_addresses = []
 unicast_socket = None
 handler_thread = None
+logger = None
 
 def initialize():
+	global logger
+	logger = logging.getLogger(__name__)
 	if len(Config.udp.peer)==0 and len(Config.udp.broadcast)==0:
 		logger.info("Broadcasts not configured")
 		return True
@@ -74,7 +78,7 @@ class UDPHandlerThread(threading.Thread):
 		while True:
 			datagram = broadcast_socket.recv(65535)
 			logger.debug("Got datagram")
-			#todo: process incoming datagram
+			AnnouncementHandler.process_announcement_datagram(datagram)
 
 
 def send_announce(datagram):
@@ -93,7 +97,6 @@ def send_announce(datagram):
 
 if __name__ == "__main__":
 	logging.basicConfig(format='%(asctime)s %(process)d %(levelname)s %(module)s:%(message)s',level=logging.DEBUG)
-	logger = logging.getLogger(__name__)
 	Config.initialize("vagus.ini")
 	initialize()
 	send_announce("foo")
