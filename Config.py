@@ -22,6 +22,7 @@ udp_multicast.port = 8722
 udp_multicast.multicast = []
 tcp = Container()
 tcp.port = 8721
+tcp.peer=[]
 
 
 #copy-pasta from stackoverflow, author: user2185338
@@ -206,6 +207,11 @@ def initialize(filename):
 					return False
 				tcp.peer.append(p)
 	
+	if len(udp.peer)==0 and len(udp.broadcast)==0 and len(udp_multicast.multicast)==0 and len(tcp.peer)==0:
+		#default to simple broadcast
+		udp.broadcast.append("*")
+	
+	return True
 
 if __name__ == "__main__":
 	initialize(sys.argv[1])
