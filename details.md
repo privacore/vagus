@@ -280,11 +280,11 @@ Default value: nono (but see comment on whole section above)
 This item can be specified multiple times.
 It specifies where to send broadcasts. The value comes in three forms:
   * `*` (asterisk)
-    Specifies to send broadcast on all network interface on all subnets.
+    Specifies to send broadcast to 255.255.255.255
+  * dotted-quad
+    Specifies to send a broadcast to that address
   * interface name (must start with a letter)
     Specifies to send broadcast on this network interface on all subnets.
-  * interface name `:` broadcast-address
-    Specifies to send broadcast using that specific destination on that network interface
 Only IPv4 addresses (dotted-quad) is supported.
 
 Examples:
@@ -347,10 +347,9 @@ peer: 2001:0db8:1::7
 broadcast: *
 broadcast: eth0
 broadcast: 192.0.2.255
-broadcast: eth0:192.0.2.255
 
 [udp-multicast]
-port: 8721
+port: 8722
 multicast: eth0:224.1.1.1
 multicast: *:224.1.1.1
 multicast: eth0:ff02::1
