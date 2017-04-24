@@ -90,9 +90,11 @@ def initialize(filename):
 	global client_port
 	
 	if config.has_option("main","identity"):
-		identity = config.get("main","identity")
+		identity = config.get("main","identity")[0]
 		if identity==None or len(identity)==0:
 			identity = socket.gethostname()
+	else:
+		identity = socket.gethostname()
 	
 	if config.has_option("main","instance-timeout-min"):
 		instance_timeout_min = int(config.get("main","instance-timeout-min")[0])
