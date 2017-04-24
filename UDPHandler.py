@@ -78,7 +78,7 @@ class UDPHandlerThread(threading.Thread):
 		while True:
 			datagram = broadcast_socket.recv(65535)
 			logger.debug("Got datagram")
-			AnnouncementHandler.process_announcement_datagram(datagram)
+			AnnouncementHandler.process_message(datagram)
 
 
 def send_announce(datagram):

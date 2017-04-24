@@ -33,7 +33,7 @@ class ClientInterface(object):
 			self.logger.debug("Commandline was empty")
 			return ""
 		if command_line=="quit" or command_line=="exit":
-			#undocumented command but nice to testing with telnet
+			#undocumented command but nice for testing with telnet
 			return None
 		(command,_,arguments) = command_line.partition(' ')
 		if command=="getversion":

@@ -53,6 +53,18 @@ def get_cluster_list():
 		registry_lock.release()
 	return l
 
+def get_local_instance_dict(cluster):
+	now = time.time()
+	try:
+		registry_lock.acquire()
+		if cluster not in local_instances:
+			return {}
+		local_instances[cluster].timeout_expired_instances(now)
+		l = copy.deepcopy(local_instances[cluster])
+	finally:
+		registry_lock.release()
+	return l
+
 def get_global_instance_dict(cluster):
 	now = time.time()
 	try:
@@ -67,4 +79,5 @@ def get_global_instance_dict(cluster):
 
 
 def set_change_callback(c):
+	global callback
 	callback = c
