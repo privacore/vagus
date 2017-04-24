@@ -38,7 +38,7 @@ class MultiOrderedDict(OrderedDict):
 
 def parse_udp_multicast(s):
 	#accept interface:ip
-	#transform into touble (interface,ip-str)
+	#transform into tuple (interface,ip-str)
 	if ":" not in s:
 		return None
 	(first,_,second) = s.partition(':')
@@ -66,6 +66,17 @@ def validate_ip(s):
 			return None
 	return s
 
+def valudate_broadcast(s):
+	#ifname or address
+	if "." in s:
+		#addr, must be dotted-quad
+		if len(s.split("."))!=4:
+			return None
+	else:
+		#ifname, must start with letter or be "*"
+		if s!='*' and (s[0] not in string.ascii_letters):
+			return None
+	return s
 
 def initialize(filename):
 	config = ConfigParser.RawConfigParser(dict_type=MultiOrderedDict)
@@ -134,6 +145,22 @@ def initialize(filename):
 					print >>sys.stderr, "Unhandled udp peer:",tmp
 					return False
 				udp.peer.append(p)
+		if config.has_option("udp","broadcast"):
+			tmp = config.get("udp","broadcast")
+			udp.broadcast=[]
+			if type(tmp)==list:
+				for tmp2 in tmp:
+					p = valudate_broadcast(tmp2)
+					if p==None:
+						print >>sys.stderr, "Unhandled udp broadcast:",tmp2
+						return False
+					udp.broadcast.append(p)
+			else:
+				p = valudate_broadcast(tmp)
+				if p==None:
+					print >>sys.stderr, "Unhandled udp broadcast:",tmp
+					return False
+				udp.broadcast.append(p)
 	
 	if config.has_section("udp-multicast"):
 		global udp_multicast
@@ -148,13 +175,13 @@ def initialize(filename):
 					if p==None:
 						print >>sys.stderr, "Unhandled udp multicast:",tmp2
 						return False
-					udp.peer.append(p)
+					udp_multicast.multicast.append(p)
 			else:
 				p = parse_udp_multicast(tmp)
 				if p==None:
 					print >>sys.stderr, "Unhandled udp multicast:",tmp
 					return False
-				udp.peer.append(p)
+				udp_multicast.multicast.append(p)
 	
 	if config.has_section("tcp"):
 		global tcp
@@ -180,3 +207,4 @@ def initialize(filename):
 
 if __name__ == "__main__":
 	initialize(sys.argv[1])
+	assert len(udp.broadcast)>0
