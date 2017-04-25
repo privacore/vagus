@@ -72,7 +72,10 @@ def setup_ipv4_multicast_socket(ifaddrs, if_name, addr):
 	
 	s.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 	
+	s.setblocking(0)
+	
 	multicast_socket_ipv4.append((s,addr))
+	
 	return True
 
 
@@ -89,7 +92,10 @@ def setup_ipv6_multicast_socket(ifaddrs, if_name, addr):
 	
 	s.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_JOIN_GROUP, mreq)
 	
+	s.setblocking(0)
+	
 	multicast_socket_ipv6.append((s,addr))
+	
 	return True
 
 
@@ -100,11 +106,12 @@ class UDPMulticastHandlerThread(threading.Thread):
 			rlist.append(s)
 		for (s,addr) in multicast_socket_ipv6:
 			rlist.append(s)
-		(r,_,_) = select.select(rlist,[],[])
-		for s in r:
-			datagram = s.recv(65535)
-			logger.debug("Got datagram")
-			AnnouncementHandler.process_message(datagram)
+		while True:
+			(r,_,_) = select.select(rlist,[],[])
+			for s in r:
+				datagram = s.recv(65535)
+				logger.debug("Got datagram")
+				AnnouncementHandler.process_message(datagram)
 
 
 def send_announce(datagram):
