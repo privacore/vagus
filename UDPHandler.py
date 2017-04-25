@@ -30,6 +30,10 @@ def initialize():
 	if len(Config.udp.peer)==0 and len(Config.udp.broadcast)==0:
 		logger.info("Broadcasts not configured")
 		return True
+	if Config.udp.port==0:
+		logger.info("Broadcasts disabled with port=0")
+		return True
+	
 	
 	#Go through the broadcast specifications
 	ifaddrs = getifaddrs.get_network_interfaces()
