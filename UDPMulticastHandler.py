@@ -100,7 +100,7 @@ class UDPMulticastHandlerThread(threading.Thread):
 			rlist.append(s)
 		for (s,addr) in multicast_socket_ipv6:
 			rlist.append(s)
-		r = select.select(rlist,[],[])
+		(r,_,_) = select.select(rlist,[],[])
 		for s in r:
 			datagram = s.recv(65535)
 			logger.debug("Got datagram")
