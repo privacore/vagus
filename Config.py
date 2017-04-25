@@ -50,6 +50,9 @@ def parse_udp_multicast(s):
 		return None
 	elif (":" not in second) and ("." not in second):
 		return None
+	#IPv4 must be dotted-quad
+	if "." in second and len(second.split('.'))!=4:
+		return None
 	return (first,second)
 
 def validate_ip(s):
@@ -64,6 +67,9 @@ def validate_ip(s):
 		if s[0] in string.ascii_letters:
 			return None
 		if s[-1] in string.ascii_letters:
+			return None
+		#must be dotted-quad
+		if len(s.split('.'))!=4:
 			return None
 	return s
 
