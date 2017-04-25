@@ -4,6 +4,7 @@ import argparse
 import logging
 import logging.config
 import UDPHandler
+import UDPMulticastHandler
 from ClientInterface import ClientInterface
 import AnnouncementGenerator
 import sys
@@ -26,8 +27,12 @@ logging.config.fileConfig(args.loggingconf)
 logger = logging.getLogger(__name__)
 logger.info("vagus initializing")
 
-logger.debug("Reading configuration")
+logger.debug("Initializing UDP")
 if not UDPHandler.initialize():
+	sys.exit(2)
+
+logger.debug("Initializing UDP multicast")
+if not UDPMulticastHandler.initialize():
 	sys.exit(2)
 
 logger.debug("Initializing client handler")
