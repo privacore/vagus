@@ -89,12 +89,4 @@ class GeneratorThread(threading.Thread):
 		message+= struct.pack("!B",len(cluster)) + cluster
 		message+= instance_information
 		
-		logger.debug("msg=%s",hexstring(message))
 		return message
-
-def hexstring(s):
-	r=""
-	for c in s:
-		r += "%02x"%ord(c)
-	return r
-
