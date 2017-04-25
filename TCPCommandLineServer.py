@@ -1,17 +1,23 @@
 import SocketServer
 import threading
+import logging
 
 class CommandRequestHandler(SocketServer.StreamRequestHandler):
 	def handle(self):
-		while True:
-			data = self.rfile.readline()
-			if len(data)==0: #socket closed?
-				break
-			command_line = data.rstrip("\r\n")
-			response = self.server.command_callback(command_line)
-			if response==None:
-				break
-			self.wfile.write(response)
+		self.server.logger.debug("Got connection from %s", self.client_address)
+		try:
+			while True:
+				data = self.rfile.readline()
+				if len(data)==0: #socket closed?
+					break
+				command_line = data.rstrip("\r\n")
+				response = self.server.command_callback(command_line)
+				if response==None:
+					break
+				self.wfile.write(response)
+		except IOError, ex:
+			pass
+		self.server.logger.debug("Lost connection from %s", self.client_address)
 
 
 
@@ -25,6 +31,7 @@ class TCPCommandLineServer(AddrReuseTCPServer):
 	def __init__(self, port, command_callback):
 		AddrReuseTCPServer.__init__(self,("",port), CommandRequestHandler)
 		self.command_callback = command_callback
+		self.logger = logging.getLogger(__name__)
 	
 
 	
