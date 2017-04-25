@@ -22,6 +22,7 @@ class ClientInterface(object):
 	
 	def start(self):
 		self.thread.start()
+		return True
 	
 	def stop(self):
 		self.server.shutdown()

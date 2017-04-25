@@ -27,11 +27,16 @@ logger = logging.getLogger(__name__)
 logger.info("vagus initializing")
 
 logger.debug("Reading configuration")
-UDPHandler.initialize()
+if not UDPHandler.initialize():
+	sys.exit(2)
+
 logger.debug("Initializing client handler")
 ci = ClientInterface(Config.client_port)
-ci.start()
+if not ci.start():
+	sys.exit(2)
+
 logger.debug("starting announcement generator")
-AnnouncementGenerator.initialize()
+if not AnnouncementGenerator.initialize():
+	sys.exit(2)
 
 logger.info("vagus initialized")

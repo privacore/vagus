@@ -19,6 +19,7 @@ def initialize():
 	global thread
 	thread = GeneratorThread()
 	thread.start()
+	return True
 
 
 def local_instances_changed_callback(cluster):
