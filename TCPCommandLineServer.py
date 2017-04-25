@@ -1,6 +1,7 @@
 import SocketServer
 import threading
 import logging
+import socket
 
 class CommandRequestHandler(SocketServer.StreamRequestHandler):
 	def handle(self):
@@ -24,6 +25,7 @@ class CommandRequestHandler(SocketServer.StreamRequestHandler):
 class AddrReuseTCPServer(SocketServer.ThreadingTCPServer):
 	def __init__(self, server_address, RequestHandlerClass):
 		self.allow_reuse_address = True
+		self. address_family = socket.AF_INET6
 		SocketServer.TCPServer.__init__(self,server_address,RequestHandlerClass)
 
 
