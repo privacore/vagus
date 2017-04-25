@@ -53,6 +53,16 @@ def parse_udp_multicast(s):
 	#IPv4 must be dotted-quad
 	if "." in second and len(second.split('.'))!=4:
 		return None
+	if ":" in second:
+		#IPv6 must have [2..7] colons
+		#check for hostname (incomplete)
+		for c in second:
+			if c not in ":0123456789ABCDEFabcdef":
+				return None
+		if len(second.split(':'))<3:
+			return None
+		if len(second.split(':'))>8:
+			return None
 	return (first,second)
 
 def validate_ip(s):
@@ -63,7 +73,8 @@ def validate_ip(s):
 	elif (":" not in s) and ("." not in s):
 		return None
 	if ":" not in s:
-		#ipv4, easy check for hostname
+		#ipv4, easy
+		#check for hostname
 		if s[0] in string.ascii_letters:
 			return None
 		if s[-1] in string.ascii_letters:
@@ -71,6 +82,14 @@ def validate_ip(s):
 		#must be dotted-quad
 		if len(s.split('.'))!=4:
 			return None
+	else:
+		#check for hostname (incomplete)
+		for c in s:
+			if c not in ":0123456789ABCDEFabcdef":
+				return None
+		if len(s.split(":"))<3 or len(s.split(":"))>8:
+			return None
+		
 	return s
 
 def valudate_broadcast(s):
