@@ -168,7 +168,10 @@ class NetworkInterfaceAddress(object):
 	def __init__(self,ifa):
 		self.name = ifa.ifa_name.decode("UTF-8")
 		self.flags = ifa.ifa_flags
-		(self.addr_family,self.addr) = getfamaddr(ifa.ifa_addr.contents) #what about null TODO
+		if ifa.ifa_addr:
+			(self.addr_family,self.addr) = getfamaddr(ifa.ifa_addr.contents)
+		else:
+			(self.addr_family,self.addr) = (None,None)
 		if ifa.ifa_netmask:
 			self.netmask = getfamaddr(ifa.ifa_netmask.contents)
 		else:
