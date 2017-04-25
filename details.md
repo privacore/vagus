@@ -301,6 +301,15 @@ This section specifies how to use UDP multicasts.
 Default value: 8721
 Specifies which port listen and send to.
 
+### ttl
+Default value: 3
+This option specifies which TTL to set in the generated multicast datagrams.
+For your conveniance these are the normalt use of multicast TTLs:
+ * 0: Restricted to the same host. Won't be output by any interface.
+ * 1: Restricted to the same subnet. Won't be forwarded by a router.
+ * 2..31: Restricted to the same site/organization/department.
+ * >31: region, continents and larger scopes
+
 ### multicast
 Default value: none
 This item can be specified multiple times.
@@ -350,6 +359,7 @@ broadcast: 192.0.2.255
 
 [udp-multicast]
 port: 8722
+ttl: 3
 multicast: eth0:224.1.1.1
 multicast: *:224.1.1.1
 multicast: eth0:ff02::1

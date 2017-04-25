@@ -19,6 +19,7 @@ udp.peer=[]
 udp.broadcast=[]
 udp_multicast = Container()
 udp_multicast.port = 8722
+udp_multicast.ttl = 3
 udp_multicast.multicast = []
 tcp = Container()
 tcp.port = 8721
@@ -194,6 +195,8 @@ def initialize(filename):
 		global udp_multicast
 		if config.has_option("udp-multicast","port"):
 			udp_multicast.port = int(config.get("udp-multicast","port")[0])
+		if config.has_option("udp-multicast","ttl"):
+			udp_multicast.ttl = int(config.get("udp-multicast","ttl")[0])
 		if config.has_option("udp-multicast","multicast"):
 			tmp = config.get("udp-multicast","multicast")
 			udp_multicast.multicast=[]
