@@ -217,7 +217,7 @@ announcement ::= end_of_life
 instance_information ::= instance_id_length | instance_id
                        | end_of_life
                        | extra_information
-end_of_life ::= 64bit integer
+end_of_life ::= 64bit integer (milliseconds since 1970)
 vagus_id_length ::= 8bit integer
 vagus_id ::= string
 cluster_id_length ::= 8bit integer

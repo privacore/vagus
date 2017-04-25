@@ -15,7 +15,7 @@ class CommandRequestHandler(SocketServer.StreamRequestHandler):
 
 
 
-class AddrReuseTCPServer(SocketServer.TCPServer):
+class AddrReuseTCPServer(SocketServer.ThreadingTCPServer):
 	def __init__(self, server_address, RequestHandlerClass):
 		self.allow_reuse_address = True
 		SocketServer.TCPServer.__init__(self,server_address,RequestHandlerClass)

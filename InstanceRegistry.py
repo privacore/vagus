@@ -34,13 +34,11 @@ def update_local_instance(cluster,instance_identifier,end_of_life,extra_info):
 
 
 def update_nonlocal_instance(cluster,instance_identifier,end_of_life,extra_info):
-	any_changes = False
 	try:
 		registry_lock.acquire()
 		if not cluster in global_instances:
 			global_instances[cluster] = InstanceDict()
-		if global_instances.update(instance_identifier,end_of_life,extra_info):
-			any_changes = True
+		global_instances[cluster].update(instance_identifier,end_of_life,extra_info)
 	finally:
 		registry_lock.release()
 
@@ -71,7 +69,7 @@ def get_global_instance_dict(cluster):
 		registry_lock.acquire()
 		if cluster not in global_instances:
 			return {}
-		global_instances[cluster].timeout_expired_instances(now)
+		b = global_instances[cluster].timeout_expired_instances(now)
 		l = copy.deepcopy(global_instances[cluster])
 	finally:
 		registry_lock.release()
