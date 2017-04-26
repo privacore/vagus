@@ -287,6 +287,8 @@ It specifies where to send broadcasts. The value comes in three forms:
     Specifies to send broadcast on this network interface on all subnets.
 Only IPv4 addresses (dotted-quad) is supported.
 
+Broadcast within a subnet usually work fine. If you want to cross to another subnet you may need to tell the router to allow that.
+
 Examples:
 ```
 broadcast: *
@@ -296,6 +298,7 @@ broadcast: eth0:192.0.2.255
 ```
 ## udp-multicast section
 This section specifies how to use UDP multicasts.
+Note: multicast usually work fine on a single subnet. When crossing subnets you need to tell you network administrator to allow it. Or install a multicast router yourself (see http://troglobit.github.io/smcroute.html for ideas) on your router.
 
 ### port
 Default value: 8721
@@ -308,7 +311,7 @@ For your conveniance these are the normalt use of multicast TTLs:
  * 0: Restricted to the same host. Won't be output by any interface.
  * 1: Restricted to the same subnet. Won't be forwarded by a router.
  * 2..31: Restricted to the same site/organization/department.
- * >31: region, continents and larger scopes
+ * 32...: region, continents and larger scopes
 
 ### multicast
 Default value: none
