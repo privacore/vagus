@@ -160,16 +160,16 @@ Server:
 ```
 
 ### getvaguslist command
-This commands retrieves a list of vagus processes Vagus knows about.
+This commands retrieves a list of vagus processes Vagus knows about together when when it last heard from it and its end-of-life.
 
 Example:
 ```
 Client:
   getvaguslist <NL>
 Server:
-  hosta <NL>
-  hostb <NL>
-  hostd <NL>
+  hosta:1493239621752:1493239631000 <NL>
+  hostb:1493239621726:1493239631000 <NL>
+  hostd:1493239621747:1493239631000 <NL>
   <NL>
 ```
 
