@@ -86,6 +86,9 @@ class UDPHandlerThread(threading.Thread):
 
 
 def send_announce(datagram):
+	if len(datagram)>65507:
+		logger.debug("Datagram too large")
+		return
 	if broadcast_socket:
 		for addr in broadcast_addresses:
 			broadcast_socket.sendto(datagram,(addr,Config.udp.port))

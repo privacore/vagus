@@ -115,6 +115,9 @@ class UDPMulticastHandlerThread(threading.Thread):
 
 
 def send_announce(datagram):
+	if len(datagram)>65507:
+		logger.debug("Datagram too large")
+		return
 	for (s,addr) in multicast_socket_ipv4:
 		s.sendto(datagram,(addr,Config.udp_multicast.port))
 	for (s,addr) in multicast_socket_ipv6:
