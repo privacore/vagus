@@ -1,4 +1,5 @@
 import InstanceRegistry
+import VagusRegistry
 import Config
 import struct
 import logging
@@ -87,6 +88,8 @@ def process_announcement(payload):
 		logger.info("Got expired announcement from %s", vagus_id)
 		return
 	
+	VagusRegistry.update_vagus_instance(vagus_id,announcement_end_of_life)
+	
 	if vagus_id==Config.identity:
 		logger.debug("Got announcement from ourselves")
 		return
@@ -94,3 +97,4 @@ def process_announcement(payload):
 	#update the global registry
 	for i in instance_information:
 		InstanceRegistry.update_nonlocal_instance(cluster_id,i[0],i[1],i[2])
+	

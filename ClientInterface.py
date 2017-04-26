@@ -1,6 +1,7 @@
 from TCPCommandLineServer import TCPCommandLineServer
 import Config
 import InstanceRegistry
+import VagusRegistry
 import threading
 import logging
 import time
@@ -138,10 +139,17 @@ class ClientInterface(object):
 	
 	def handle_getclusters(self,arguments):
 		l = InstanceRegistry.get_cluster_list()
-		return "\n".join(l) + "\n"
+		if len(l)>0:
+			return "\n".join(l) + "\n" + "\n"
+		else:
+			return "\n"
 	
 	def handle_getvaguslist(self,arguments):
-		pass #todo
+		d = VagusRegistry.get_vagus_dict()
+		r=""
+		for k,v in d.iteritems():
+			r += "%s:%d:%s\n"%(k,v[0]*1000,v[1]*1000)
+		return r+"\n"
 	
 	def handle_vagushint(self,arguments):
 		pass #todo
