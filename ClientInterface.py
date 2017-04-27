@@ -171,12 +171,12 @@ class ClientInterface(object):
 
 if __name__ == "__main__":
 	logging.basicConfig(format='%(asctime)s %(process)d %(levelname)s %(module)s:%(message)s',level=logging.DEBUG)
-	ci = ClientInterface(12345)
+	ci = ClientInterface(8720)
 	ci.start()
 	import socket
 	
 	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-	s.connect(("localhost",12345))
+	s.connect(("localhost",8720))
 	
 	s.send("getversion\n");
 	r = s.recv(1024)

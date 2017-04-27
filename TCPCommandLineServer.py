@@ -53,12 +53,12 @@ if __name__ == "__main__":
 		print "test_callback: command_line=",command_line
 		return "ok:"+command_line
 	
-	server = TCPCommandLineServer(12345,test_callback)
+	server = TCPCommandLineServer(8720,test_callback)
 	thread = ServeThread(server)
 	thread.start()
 	
 	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-	s.connect(("localhost",12345))
+	s.connect(("localhost",8720))
 	
 	s.send("hello\n")
 	time.sleep(0.5)

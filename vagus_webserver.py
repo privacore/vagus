@@ -14,7 +14,7 @@ import time
 def do_command(cmd):
 	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 	try:
-		s.connect(("localhost",12345))
+		s.connect(("localhost",8720))
 		s.send(cmd+"\n")
 		r = s.recv(1000000)
 		return r

@@ -179,7 +179,7 @@ This command tells Vagus where another vagus may exist. This can be useful if th
 Example 1 (UDP on IPv4):
 ```
 Client:
-  vagushint udp4:192.0.2.7:12345 <NL>
+  vagushint udp4:192.0.2.7:8720 <NL>
 Server:
   <NL>
 ```
@@ -187,7 +187,7 @@ Server:
 Example 2 (TCP on IPv6):
 ```
 Client:
-  vagushint tcp6:[2001:0db8:1::7]:12345 <NL>
+  vagushint tcp6:[2001:0db8:1::7]:8720 <NL>
 Server:
   <NL>
 ```
