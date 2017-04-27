@@ -52,11 +52,11 @@ def get_vagus_list():
 	#parse into id+lastseen+timeout
 	l = []
 	for line in r.split("\n"):
-		if len(line.split(":"))==3:
-			(vagus_id,last_seen,end_of_life) = line.split(":")
+		if len(line.split(":"))==4:
+			(vagus_id,last_seen,end_of_life,address) = line.split(":")
 			last_seen = int(last_seen)
 			end_of_life = int(end_of_life)
-			l.append((vagus_id,last_seen,end_of_life))
+			l.append((vagus_id,last_seen,end_of_life,address))
 	return l
 
 
@@ -119,7 +119,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 			
 		print >>self.wfile, '<h1>Known Vagus processes</h1>'
 		print >>self.wfile, '<table>'
-		print >>self.wfile, '    <tr><th>Identity</th><th>Last seen</th><th>end-of-life</th></tr>'
+		print >>self.wfile, '    <tr><th>Identity</th><th>Last seen</th><th>end-of-life</th><th>Most recent address</th></tr>'
 		for vagus in vagus_list:
 			print >>self.wfile, '    <tr>'
 			print >>self.wfile, '        <td>%s</td>'%vagus[0]
@@ -127,6 +127,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 			print >>self.wfile, '        <td>%s</td>'%last_seen_str
 			end_of_life_str = time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime(vagus[2]/1000))
 			print >>self.wfile, '        <td>%s</td>'%end_of_life_str
+			print >>self.wfile, '        <td>%s</td>'%vagus[3]
 			print >>self.wfile, '    </tr>'
 		print >>self.wfile, '</table>'
 			

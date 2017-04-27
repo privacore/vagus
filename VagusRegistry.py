@@ -30,5 +30,5 @@ def get_vagus_dict():
 	d = copy.deepcopy(vagus_instances)
 	if Config.identity not in d:
 		#ensure we are always present
-		d[Config.identity] = (time.time(), time.time()+Config.announcement_interval_max*2/1000.0)
+		d[Config.identity] = (time.time(), time.time()+Config.announcement_interval_max*2/1000.0,None)
 	return d

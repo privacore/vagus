@@ -7,6 +7,15 @@ import logging
 import time
 
 
+def addresss2nicestring(address):
+	#address is a (str,port) tuple from socket.recvfrom() or socket.getpeername()
+	#output is something nice such as "192.0.2.7" or "2001:0db8:1::7"
+	if address!=None:
+		return address[0]
+	else:
+		return None
+
+
 class ServeThread(threading.Thread):
 	def __init__(self,tcp_server):
 		threading.Thread.__init__(self)
@@ -152,7 +161,8 @@ class ClientInterface(object):
 		d = VagusRegistry.get_vagus_dict()
 		r=""
 		for k,v in d.iteritems():
-			r += "%s:%d:%s\n"%(k,v[0]*1000,v[1]*1000)
+			addr = v[2][0] if v[2]!=None else ""
+			r += "%s:%d:%d:%s\n"%(k,v[0]*1000,v[1]*1000,addr)
 		return r+"\n"
 	
 	def handle_vagushint(self,arguments):
