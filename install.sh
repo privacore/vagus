@@ -44,6 +44,7 @@ done
 
 echo "Copying configuration files to $conf_directory"
 for f in $source_dir/*.ini $source_dir/*.conf; do
+	[ ! -e $f ] && continue
 	b=`basename $f`
 	cp -a $f $conf_directory/$b || die
 	chown vagus:users $conf_directory/$b || die
