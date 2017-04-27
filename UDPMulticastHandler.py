@@ -109,8 +109,8 @@ class UDPMulticastHandlerThread(threading.Thread):
 		while True:
 			(r,_,_) = select.select(rlist,[],[])
 			for s in r:
-				datagram = s.recv(65535)
-				logger.debug("Got datagram")
+				(datagram,address) = s.recvfrom(65535)
+				logger.debug("Got datagram from %s",address)
 				AnnouncementHandler.process_message(datagram)
 
 
