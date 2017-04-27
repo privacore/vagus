@@ -144,13 +144,13 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 		self.end_headers()
 		print >>self.wfile, '<html>'
 		print >>self.wfile, '<head>'
-		print >>self.wfile, '<title>Vagus: instances in %s (%d)</title>'%(cluster_id,len(instance_list))
+		print >>self.wfile, '<title>Vagus: instances in %s</title>'%(cluster_id)
 		print >>self.wfile, '<meta name="viewport" content="width=device-width, initial-scale=1.0"/>'
 		#print >>self.wfile, '<link rel="stylesheet" type="text/css" href="default.css" title="Default"/>'
 		print >>self.wfile, '</head>'
 		print >>self.wfile, '<body>'
 		
-		print >>self.wfile, '<h1>Alive instances</h1>'
+		print >>self.wfile, '<h1>Alive instances (%d)</h1>'%(len(instance_list))
 		print >>self.wfile, '<ul>'
 		for instance in instance_list:
 			print >>self.wfile, '<li>%s</li>'%(instance)
