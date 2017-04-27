@@ -111,7 +111,7 @@ class UDPMulticastHandlerThread(threading.Thread):
 			for s in r:
 				(datagram,address) = s.recvfrom(65535)
 				logger.debug("Got datagram from %s",address)
-				AnnouncementHandler.process_message(datagram)
+				AnnouncementHandler.process_message(datagram,address)
 
 
 def send_announce(datagram):

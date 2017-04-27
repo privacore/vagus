@@ -80,9 +80,9 @@ def initialize():
 class UDPHandlerThread(threading.Thread):
 	def run(self):
 		while True:
-			datagram = broadcast_socket.recv(65535)
-			logger.debug("Got datagram")
-			AnnouncementHandler.process_message(datagram)
+			(datagram,address) = broadcast_socket.recvfrom(65535)
+			logger.debug("Got datagram from %s",address)
+			AnnouncementHandler.process_message(datagram,address)
 
 
 def send_announce(datagram):

@@ -3,14 +3,14 @@ import copy
 import threading
 import Config
 
-vagus_instances = {} #id-> (timestamp,eol)
+vagus_instances = {} #id-> (timestamp,eol,source_address)
 lock = threading.Lock()
 
 
-def update_vagus_instance(vagus_id,end_of_life):
+def update_vagus_instance(vagus_id,end_of_life,source_address):
 	try:
 		lock.acquire()
-		vagus_instances[vagus_id] = (time.time(),end_of_life)
+		vagus_instances[vagus_id] = (time.time(),end_of_life,source_address)
 	finally:
 		lock.release()
 

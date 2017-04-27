@@ -9,7 +9,7 @@ logger = None
 
 
 
-def process_message(message):
+def process_message(message,source_address):
 	global logger
 	if not logger:
 		logger = logging.getLogger(__name__)
@@ -28,12 +28,12 @@ def process_message(message):
 	logger.debug("Got valid vagus message, type=0x%x, length=%d", message_type, length)
 	
 	if message_type==1:
-		process_announcement(payload)
+		process_announcement(payload,source_address)
 	else:
 		logger.info("Got invalid vagus message")
 
 
-def process_announcement(payload):
+def process_announcement(payload,source_address):
 	if len(payload)<8:
 		logger.debug("Got invalid payload")
 		return
@@ -88,7 +88,7 @@ def process_announcement(payload):
 		logger.info("Got expired announcement from %s", vagus_id)
 		return
 	
-	VagusRegistry.update_vagus_instance(vagus_id,announcement_end_of_life)
+	VagusRegistry.update_vagus_instance(vagus_id,announcement_end_of_life,source_address)
 	
 	if vagus_id==Config.identity:
 		logger.debug("Got announcement from ourselves")
