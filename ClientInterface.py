@@ -76,6 +76,8 @@ class ClientInterface(object):
 		else:
 			extra_info = None
 		
+		if len(cluster)==0 or len(cluster)>255:
+			return None
 		if len(instance_id)==0 or len(instance_id)>255:
 			return None
 		
@@ -121,6 +123,8 @@ class ClientInterface(object):
 		else:
 			extra_info = None
 		
+		if len(cluster)==0 or len(cluster)>255:
+			return None
 		if len(instance_id)==0 or len(instance_id)>255:
 			return None
 		
