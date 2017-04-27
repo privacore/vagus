@@ -1,0 +1,16 @@
+[Unit]
+Description=Vagus webserver
+
+[Service]
+Type=simple
+ExecStart=__BIN_DIRECTORY__/run_webserver.sh
+User=vagus
+
+KillSignal=9
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+Alias=vagus_webserver.service
+WantedBy=multi-user.target
