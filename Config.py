@@ -116,24 +116,25 @@ def initialize(filename):
 	global announcement_interval_max
 	global client_port
 	
-	if config.has_option("main","identity"):
-		identity = config.get("main","identity")[0]
-		if identity==None or len(identity)==0:
-			identity = socket.gethostname()
-	else:
-		identity = socket.gethostname()
-	
-	if config.has_option("main","instance-timeout-min"):
-		instance_timeout_min = int(config.get("main","instance-timeout-min")[0])
-	if config.has_option("main","instance-timeout-max"):
-		instance_timeout_max = int(config.get("main","instance-timeout-max")[0])
+	identity = socket.gethostname()
+	if config.has_section("main"):
+		if config.has_option("main","identity"):
+			identity = config.get("main","identity")[0]
+			if identity==None or len(identity)==0:
+				identity = socket.gethostname()
 
-	if config.has_option("main","announcement-interval-min"):
-		announcement_interval_min = int(config.get("main","announcement-interval-min")[0])
-	if config.has_option("main","announcement-interval-max"):
-		announcement_interval_max = int(config.get("main","announcement-interval-max")[0])
-	
-	client_port = int(config.get("main","client-port")[0])
+		if config.has_option("main","instance-timeout-min"):
+			instance_timeout_min = int(config.get("main","instance-timeout-min")[0])
+		if config.has_option("main","instance-timeout-max"):
+			instance_timeout_max = int(config.get("main","instance-timeout-max")[0])
+
+		if config.has_option("main","announcement-interval-min"):
+			announcement_interval_min = int(config.get("main","announcement-interval-min")[0])
+		if config.has_option("main","announcement-interval-max"):
+			announcement_interval_max = int(config.get("main","announcement-interval-max")[0])
+		
+		if config.has_option("main","client-port"):
+			client_port = int(config.get("main","client-port")[0])
 	
 	#validate
 	if instance_timeout_min<0:
