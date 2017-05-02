@@ -12,8 +12,8 @@ It is not a full-fledged HA system. It merely provices a mechanism for building 
 
 # Platforms
 Tested on:
-  * Python 2.7.6
-  * Linux 3+
+  * Python 2.7.6, 2.7.12
+  * Linux 3.11.10, 4.4.57, 4.4.62
 
 It will not work on Windows because it needs to discover network interfaces and addresses using the getifdaddrs() system call.
 
