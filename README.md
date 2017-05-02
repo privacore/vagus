@@ -17,6 +17,16 @@ Tested on:
 
 It will not work on Windows because it needs to discover network interfaces and addresses using the getifdaddrs() system call.
 
+## Installation
+
+Vagus comes with an install script that installs it as a system service running under systemd.
+
+1. clone the respository
+2. with root priviliges run `install.sh`
+
+Done. Vagus has now been installed into `/usr/local/vagus`
+
+
 # Background
 It was built for use in https://github.com/privacore/open-source-search-engine
 
