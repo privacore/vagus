@@ -8,7 +8,7 @@ It supports:
   * UDP multicast
   * Multiple namespaces/clusters
 
-It is not a full-fledged HA system. It merely provices a mechanism for building a HA system.
+It is not a full-fledged HA system. It merely provides a mechanism for building a HA system.
 
 # Platforms
 Tested on:
@@ -24,8 +24,8 @@ Vagus comes with an install script that installs it as a system service running 
 1. clone the respository
 2. with root priviliges run `install.sh`
 
-Done. Vagus has now been installed into `/usr/local/vagus`
-
+Done. Vagus has now been installed into `/usr/local/vagus`, and it is already running.
+It has a non-mandatory read-only web interface runnig on port 8724.
 
 # Background
 It was built for use in https://github.com/privacore/open-source-search-engine
