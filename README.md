@@ -25,7 +25,7 @@ Vagus comes with an install script that installs it as a system service running 
 2. with root priviliges run `install.sh`
 
 Done. Vagus has now been installed into `/usr/local/vagus`, and it is already running.
-It has a non-mandatory read-only web interface runnig on port 8724.
+It has a non-mandatory read-only web interface running on port 8724.
 
 # Background
 It was built for use in https://github.com/privacore/open-source-search-engine
