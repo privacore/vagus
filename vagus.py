@@ -5,6 +5,7 @@ import logging
 import logging.config
 import UDPHandler
 import UDPMulticastHandler
+import TCPHandler
 from ClientInterface import ClientInterface
 import AnnouncementGenerator
 import sys
@@ -33,6 +34,10 @@ if not UDPHandler.initialize():
 
 logger.debug("Initializing UDP multicast")
 if not UDPMulticastHandler.initialize():
+	sys.exit(2)
+
+logger.debug("Initializing TCP")
+if not TCPHandler.initialize():
 	sys.exit(2)
 
 logger.debug("Initializing client handler")

@@ -1,5 +1,6 @@
 import UDPHandler
 import UDPMulticastHandler
+import TCPHandler
 import InstanceRegistry
 import Config
 import logging
@@ -71,6 +72,7 @@ class GeneratorThread(threading.Thread):
 		message = self.form_announcement_message(cluster,instance_dict)
 		UDPHandler.send_announce(message)
 		UDPMulticastHandler.send_announce(message)
+		TCPHandler.send_announce(message)
 	
 	def form_announcement_message(self,cluster,instance_dict):
 		instance_information = ""
