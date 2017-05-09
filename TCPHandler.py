@@ -195,6 +195,8 @@ class TCPOutThread(threading.Thread):
 					
 		
 def send_announce(datagram):
+	if out_sockets_wakeup_pipe==None:
+		return
 	global out_sockets
 	try:
 		out_sockets_lock.acquire()
