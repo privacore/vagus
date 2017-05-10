@@ -16,10 +16,17 @@ def do_command(cmd):
 	try:
 		s.connect(("localhost",8720))
 		s.send(cmd+"\n")
-		r = s.recv(1000000)
-		return r
+		result = ""
+		while True:
+			r = s.recv(1000000)
+			if len(r)==0: #socket closed, but we don't expect that
+				return None
+			result += r
+			if result=="\n" or (len(result)>=2 and result[-2:]=="\n\n"):
+				break
+		return result
 	except socket.error, ex:
-		logger.debug("Got exception when tryign to talk to vagus: %s",ex)
+		logger.debug("Got exception when trying to talk to vagus: %s",ex)
 		pass
 	finally:
 		s.close()
