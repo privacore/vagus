@@ -79,7 +79,7 @@ class ClientInterface(object):
 			return None
 		cluster = arguments.split(':')[0]
 		instance_id = arguments.split(':')[1]
-		timeout_str = arguments.split(':')[2]
+		keepalive_lifetime_str = arguments.split(':')[2]
 		if len(arguments.split(':'))>2:
 			extra_info = arguments.partition(':')[2].partition(':')[2].partition(':')[2]
 		else:
@@ -91,16 +91,16 @@ class ClientInterface(object):
 			return None
 		
 		try:
-			timeout = int(timeout_str)
+			keepalive_lifetime = int(keepalive_lifetime_str)
 		except ValueError, ex:
 			return None
 		
 		if extra_info!=None and len(extra_info)>255:
 			return None
 		
-		timeout = min(max(timeout,Config.instance_timeout_min),Config.instance_timeout_max)
-		end_of_life = time.time() + timeout/1000.0
-		InstanceRegistry.update_local_instance(cluster,instance_id,end_of_life,extra_info)
+		keepalive_lifetime = min(max(keepalive_lifetime,Config.instance_timeout_min),Config.instance_timeout_max)
+		end_of_life = time.time() + keepalive_lifetime/1000.0
+		InstanceRegistry.update_local_instance(cluster,instance_id,keepalive_lifetime,end_of_life,extra_info)
 		
 		return "\n"
 	
@@ -113,8 +113,8 @@ class ClientInterface(object):
 		r = ""
 		for (k,v) in d.items():
 			item = str(k)
-			if v[1]:
-				item += ":" + v[1]
+			if v.extra_info:
+				item += ":" + v.extra_info
 			r += item + "\n"
 		return r + "\n"
 	
@@ -126,7 +126,7 @@ class ClientInterface(object):
 			return None
 		cluster = arguments.split(':')[0]
 		instance_id = arguments.split(':')[1]
-		timeout_str = arguments.split(':')[2]
+		keepalive_lifetime_str = arguments.split(':')[2]
 		if len(arguments.split(':'))>2:
 			extra_info = arguments.partition(':')[2].partition(':')[2].partition(':')[2]
 		else:
@@ -138,15 +138,15 @@ class ClientInterface(object):
 			return None
 		
 		try:
-			timeout = int(timeout_str)
+			keepalive_lifetime = int(keepalive_lifetime_str)
 		except ValueError, ex:
 			return None
 		
 		if extra_info!=None and len(extra_info)>255:
 			return None
 		
-		end_of_life = time.time() + timeout/1000.0
-		InstanceRegistry.update_local_instance(cluster,instance_id,end_of_life,extra_info)
+		end_of_life = time.time() + keepalive_lifetime/1000.0
+		InstanceRegistry.update_local_instance(cluster,instance_id,keepalive_lifetime,end_of_life,extra_info)
 		
 		return self.handle_poll(cluster)
 	

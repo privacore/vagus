@@ -15,17 +15,17 @@ callback = noop_change_callback
 
 
 
-def update_local_instance(cluster,instance_identifier,end_of_life,extra_info):
+def update_local_instance(cluster,instance_identifier,keepalive_lifetime,end_of_life,extra_info):
 	any_changes = False
 	try:
 		registry_lock.acquire()
 		if not cluster in local_instances:
 			local_instances[cluster] = InstanceDict()
-		if local_instances[cluster].update(instance_identifier,end_of_life,extra_info):
+		if local_instances[cluster].update(instance_identifier,keepalive_lifetime,end_of_life,extra_info):
 			any_changes = True
 		if not cluster in global_instances:
 			global_instances[cluster] = InstanceDict()
-		if global_instances[cluster].update(instance_identifier,end_of_life,extra_info):
+		if global_instances[cluster].update(instance_identifier,keepalive_lifetime,end_of_life,extra_info):
 			any_changes = True
 	finally:
 		registry_lock.release()
@@ -38,7 +38,7 @@ def update_nonlocal_instance(cluster,instance_identifier,end_of_life,extra_info)
 		registry_lock.acquire()
 		if not cluster in global_instances:
 			global_instances[cluster] = InstanceDict()
-		global_instances[cluster].update(instance_identifier,end_of_life,extra_info)
+		global_instances[cluster].update(instance_identifier,None,end_of_life,extra_info)
 	finally:
 		registry_lock.release()
 

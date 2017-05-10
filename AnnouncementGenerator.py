@@ -32,6 +32,14 @@ def local_instances_changed_callback(cluster):
 	changed_cv.notify()
 	changed_cv.release()
 
+#python's min() returns none on min(...None..)
+def min_ignoring_none(a,b):
+	if a==None:
+		return b
+	elif b==None:
+		return a
+	else:
+		return min(a,b)
 
 class GeneratorThread(threading.Thread):
 	def run(self):
@@ -58,9 +66,27 @@ class GeneratorThread(threading.Thread):
 			self.send_announcements()
 			now = time.time()
 			next_earliest_send = now + Config.announcement_interval_min/1000.0
-			next_latest_send = now + Config.announcement_interval_max/1000.0
+			mktaac = self.min_keepalive_timeout_across_all_clusters()
+			effective_announcement_interval_max = min_ignoring_none(Config.announcement_interval_max,mktaac)
+			effective_announcement_interval_max = max(Config.announcement_interval_min,effective_announcement_interval_max)
+			next_latest_send = now + effective_announcement_interval_max/1000.0
+			if mktaac!=None:
+				#hackish:
+				#  We want to send out announcements so they are received and processed by other vagus instances
+				#  before any instances time out, but we have no way of knowing the delay from we send to that is done.
+				#If this hack doesn't work then you have to configure announcement-interval-max
+				next_latest_send -= 0.050
 			#todo: do timeouts per cluster
-			#todo: do instance timeouts
+
+	def min_keepalive_timeout_across_all_clusters(self):
+		m = None
+		for cluster in InstanceRegistry.get_cluster_list():
+			m2 = InstanceRegistry.get_local_instance_dict(cluster).get_lowest_keepalive_lifetime()
+			if m2!=None and m2<Config.announcement_interval_min:
+				logger.warn("cluster %s has instances with keepalive-lifetime (%s) less than [main]:announcement-interval-min (%s)",cluster,m2,Config.announcement_interval_min)
+			if m==None or m2<m:
+				m=m2
+		return m
 	
 	def send_announcements(self):
 		logger.debug("Generating announcements")
@@ -79,9 +105,9 @@ class GeneratorThread(threading.Thread):
 		#struct.pack(...p...) doesn't work (?)
 		for (k,v) in instance_dict.items():
 			instance_information += struct.pack("!B",len(k)) + k
-			instance_information += struct.pack("!Q",int(v[0]*1000)) 
-			if v[1]:
-				instance_information += struct.pack("!B",len(v[1])) + v[1]
+			instance_information += struct.pack("!Q",int(v.end_of_life*1000))
+			if v.extra_info:
+				instance_information += struct.pack("!B",len(v.extra_info)) + v.extra_info
 			else:
 				instance_information += struct.pack("!B",0)
 		announcement_end_of_life = time.time() + (Config.announcement_interval_max*2 / 1000.0)
