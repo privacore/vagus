@@ -146,6 +146,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 		instance_list = get_instance_list(cluster_id)
 		if instance_list==None:
 			return self.serve_vaugs_talk_error("Could not get instance list from vagus")
+		instance_list.sort()
 		
 		self.send_response(200)
 		self.send_header("Content-type", "text/html; charset=utf-8")
