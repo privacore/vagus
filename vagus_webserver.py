@@ -59,8 +59,9 @@ def get_vagus_list():
 	#parse into id+lastseen+timeout
 	l = []
 	for line in r.split("\n"):
-		if len(line.split(":"))==4:
-			(vagus_id,last_seen,end_of_life,address) = line.split(":")
+		if len(line.split(":"))>=4:
+			(vagus_id,last_seen,end_of_life) = line.split(":")[0:3]
+			address = line.partition(':')[2].partition(':')[2].partition(':')[2]
 			last_seen = int(last_seen)
 			end_of_life = int(end_of_life)
 			l.append((vagus_id,last_seen,end_of_life,address))
