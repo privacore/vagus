@@ -56,7 +56,7 @@ def get_local_instance_dict(cluster):
 	try:
 		registry_lock.acquire()
 		if cluster not in local_instances:
-			return {}
+			return InstanceDict()
 		local_instances[cluster].timeout_expired_instances(now)
 		l = copy.deepcopy(local_instances[cluster])
 	finally:
@@ -68,7 +68,7 @@ def get_global_instance_dict(cluster):
 	try:
 		registry_lock.acquire()
 		if cluster not in global_instances:
-			return {}
+			return InstanceDict()
 		b = global_instances[cluster].timeout_expired_instances(now)
 		l = copy.copy(global_instances[cluster])
 	finally:
