@@ -70,7 +70,7 @@ def get_global_instance_dict(cluster):
 		if cluster not in global_instances:
 			return {}
 		b = global_instances[cluster].timeout_expired_instances(now)
-		l = copy.deepcopy(global_instances[cluster])
+		l = copy.copy(global_instances[cluster])
 	finally:
 		registry_lock.release()
 	return l
