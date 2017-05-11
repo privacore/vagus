@@ -146,7 +146,18 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 		instance_list = get_instance_list(cluster_id)
 		if instance_list==None:
 			return self.serve_vaugs_talk_error("Could not get instance list from vagus")
-		instance_list.sort()
+		#we want the instances to be sorted but we have to check if they should be numeriacally or alphamerically sorted
+		all_numeric = True
+		for i in instance_list:
+			if not i.split(':')[0].isdigit():
+				all_numeric = False
+				break
+		if all_numeric:
+			def cmp_numeric(a,b):
+				return cmp(int(a.split(':')[0]),int(b.split(':')[0]))
+			instance_list.sort(cmp=cmp_numeric)
+		else:
+			instance_list.sort()
 		
 		self.send_response(200)
 		self.send_header("Content-type", "text/html; charset=utf-8")
