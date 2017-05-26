@@ -18,12 +18,13 @@ class InstanceDict(dict):
 			return True
 	
 	def timeout_expired_instances(self,now):
-		any_removed = False
+		removed_instance_ids = []
 		for k in self.keys():
 			if self[k].end_of_life <= now:
+				removed_instance_ids.append(self[k].instance_identifier)
 				del self[k]
 				any_removed = True
-		return any_removed
+		return removed_instance_ids
 	
 	def get_lowest_keepalive_lifetime(self):
 		m = None
