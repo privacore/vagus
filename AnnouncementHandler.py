@@ -4,6 +4,7 @@ import Config
 import struct
 import logging
 import time
+import os, subprocess
 
 logger = None
 
@@ -86,6 +87,11 @@ def process_announcement(payload,source_address):
 	
 	if announcement_end_of_life < time.time():
 		logger.info("Got expired announcement from %s (announcement_end_of_life=%f now=%f)", vagus_id, announcement_end_of_life, time.time())
+		if os.access("./got_expired_announcement.sh",os.X_OK):
+			try:
+				subprocess.call("./got_expired_announcement.sh");
+			except:
+				pass
 		return
 	
 	VagusRegistry.update_vagus_instance(vagus_id,announcement_end_of_life,source_address)
