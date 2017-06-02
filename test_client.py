@@ -16,7 +16,7 @@ while True:
 				s.send("keepalive "+sys.argv[1]+":"+sys.argv[2]+":5000\n")
 			else:
 				s.send("keepalive "+sys.argv[1]+":"+sys.argv[2]+":5000:"+sys.argv[3]+"\n")
-			time.sleep(1.5)
+			time.sleep(0.5)
 	except socket.error, ex:
 		pass
 	finally:
