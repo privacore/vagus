@@ -110,7 +110,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 		self.send_response(404)
 		self.end_headers()
 	
-	def serve_vaugs_talk_error(self,msg):
+	def serve_vagus_talk_error(self,msg):
 		self.send_response(500)
 		self.send_header("Content-type", "text/html; charset=utf-8")
 		self.end_headers()
@@ -123,10 +123,10 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def serve_root(self):
 		cluster_list = get_cluster_list()
 		if cluster_list==None:
-			return self.serve_vaugs_talk_error("Could not get cluster list from vagus")
+			return self.serve_vagus_talk_error("Could not get cluster list from vagus")
 		vagus_list = get_vagus_list()
 		if vagus_list==None:
-			return self.serve_vaugs_talk_error("Could not get vagus list from vagus")
+			return self.serve_vagus_talk_error("Could not get vagus list from vagus")
 		
 		#sort vagus instance list by name
 		vagus_list.sort()
@@ -169,7 +169,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def serve_cluster(self,cluster_id):
 		instance_list = get_instance_list(cluster_id)
 		if instance_list==None:
-			return self.serve_vaugs_talk_error("Could not get instance list from vagus")
+			return self.serve_vagus_talk_error("Could not get instance list from vagus")
 		#we want the instances to be sorted but we have to check if they should be numeriacally or alphamerically sorted
 		all_numeric = True
 		for i in instance_list:
@@ -207,7 +207,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def serve_cluster_details(self,cluster_id):
 		instance_list = get_instance_listx(cluster_id)
 		if instance_list==None:
-			return self.serve_vaugs_talk_error("Could not get instance list from vagus")
+			return self.serve_vagus_talk_error("Could not get instance list from vagus")
 		#we want the instances to be sorted but we have to check if they should be numeriacally or alphamerically sorted
 		all_numeric = True
 		for i in instance_list:
