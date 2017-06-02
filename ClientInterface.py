@@ -121,7 +121,6 @@ class ClientInterface(object):
 		return r + "\n"
 	
 	def handle_pollx(self,arguments):
-		self.logger.debug("@@@@@@@@@@@ pollx")
 		# cluster
 		if arguments=="":
 			return None
