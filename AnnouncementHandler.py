@@ -85,7 +85,7 @@ def process_announcement(payload,source_address):
 	logger.debug("Got announcement from %s, %d instances", vagus_id, len(instance_information))
 	
 	if announcement_end_of_life < time.time():
-		logger.info("Got expired announcement from %s", vagus_id)
+		logger.info("Got expired announcement from %s (announcement_end_of_life=%f now=%f)", vagus_id, announcement_end_of_life, time.time())
 		return
 	
 	VagusRegistry.update_vagus_instance(vagus_id,announcement_end_of_life,source_address)
