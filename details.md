@@ -192,6 +192,31 @@ Server:
   <NL>
 ```
 
+### pollx command
+This commands retrieves a list of instances in a cluster with additional information
+
+Command parameter:
+* cluster-identifier
+
+Command response:
+* List of instances in the cluster and optionally extra-information
+
+Example:
+```
+Client:
+  poll giraffes <NL>
+Server:
+  3:potato:1496396190.05 <NL>
+  1:potato:1496396190.03:durian+icecream <NL>
+  1:tomato:1496396191.99:durian+icecream <NL>
+  2 <NL>
+  5 <NL>
+  289 <NL>
+  <NL>
+```
+
+where the extra information compared to the normal poll command is the vagus-identifier and the lifetime of the instance.
+
 ## Vagus <-> Vagus protocol
 The vagus processes exchange information about the alive instances they know about. A Vagus sends its alive-instance information at regular interval to all specified destinations.
 
