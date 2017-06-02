@@ -53,6 +53,8 @@ class ClientInterface(object):
 			response = self.handle_keepalive(arguments)
 		elif command=="poll":
 			response = self.handle_poll(arguments)
+		elif command=="pollx":
+			response = self.handle_pollx(arguments)
 		elif command=="keepalivepoll":
 			response = self.handle_keepalivepoll(arguments)
 		elif command=="getclusters":
@@ -113,6 +115,26 @@ class ClientInterface(object):
 		r = ""
 		for (k,v) in d.items():
 			item = str(k)
+			if v.extra_info:
+				item += ":" + v.extra_info
+			r += item + "\n"
+		return r + "\n"
+	
+	def handle_pollx(self,arguments):
+		self.logger.debug("@@@@@@@@@@@ pollx")
+		# cluster
+		if arguments=="":
+			return None
+		cluster = arguments
+		d = InstanceRegistry.get_global_instance_dict(cluster)
+		r = ""
+		for (k,v) in d.items():
+			item = str(k)
+			if v.source==None:
+				item += ":" + Config.identity
+			else:
+				item += ":" + v.source
+			item += ":" + str(v.end_of_life)
 			if v.extra_info:
 				item += ":" + v.extra_info
 			r += item + "\n"

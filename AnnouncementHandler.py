@@ -96,5 +96,5 @@ def process_announcement(payload,source_address):
 	
 	#update the global registry
 	for i in instance_information:
-		InstanceRegistry.update_nonlocal_instance(cluster_id,i[0],i[1],i[2])
+		InstanceRegistry.update_nonlocal_instance(vagus_id,cluster_id,i[0],i[1],i[2])
 	
