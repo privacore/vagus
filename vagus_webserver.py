@@ -128,6 +128,9 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 		if vagus_list==None:
 			return self.serve_vaugs_talk_error("Could not get vagus list from vagus")
 		
+		#sort vagus instance list by name
+		vagus_list.sort()
+		
 		self.send_response(200)
 		self.send_header("Content-type", "text/html; charset=utf-8")
 		self.send_header("cache-control","max-age=0")
@@ -140,13 +143,13 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 		print >>self.wfile, '</head>'
 		print >>self.wfile, '<body>'
 		
-		print >>self.wfile, '<h1>Known clusters</h1>'
+		print >>self.wfile, '<h1>Known clusters (%d)</h1>'%(len(cluster_list))
 		print >>self.wfile, '<ul>'
 		for cluster in cluster_list:
 			print >>self.wfile, '<li><a href="/cluster/%s">%s</a> (<a href="/cluster_details/%s">details</a>)'%(cluster,cluster,cluster)
 		print >>self.wfile, '</ul>'
-			
-		print >>self.wfile, '<h1>Known Vagus processes</h1>'
+		
+		print >>self.wfile, '<h1>Known Vagus processes (%d)</h1>'%(len(vagus_list))
 		print >>self.wfile, '<table>'
 		print >>self.wfile, '    <tr><th>Identity</th><th>Last seen</th><th>end-of-life</th><th>Most recent address</th></tr>'
 		for vagus in vagus_list:
