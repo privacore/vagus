@@ -68,7 +68,7 @@ def get_local_instance_dict(cluster):
 		if cluster not in local_instances:
 			return InstanceDict()
 		removed_instance_ids = local_instances[cluster].timeout_expired_instances(now)
-		l = copy.deepcopy(local_instances[cluster])
+		l = copy.copy(local_instances[cluster])
 	finally:
 		registry_lock.release()
 	if removed_instance_ids:
