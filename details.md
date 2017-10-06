@@ -1,6 +1,6 @@
 # Overview
 Vagus is a building block for keeping track of which services/instances/servers/things are alive. It does not actively probe instances, so the instances have to tell it that it is alive. Vagus supports multiple clusters/namespaces and the easiest installation is to just install one on every host.
-As well as distributing alike-information it also supports piggy-backing small pieces of information per instance.
+As well as distributing alive-information it also supports piggy-backing small pieces of information per instance.
 ```
     +-------------------+                          +-------------------+
     | host A            |                          | host B            |
@@ -16,7 +16,7 @@ As well as distributing alike-information it also supports piggy-backing small p
 
 # Goals
 1. Rapidly stabilize efter power loss
-2. Rapidly distrbute alive-information to the whole system
+2. Rapidly distribute alive-information to the whole system
 3. Scale to at least 50 hosts
 4. Scale to at least 1000 instances in total
 5. Be able to cross networks
