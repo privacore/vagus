@@ -29,12 +29,12 @@ As well as distributing alive-information it also supports piggy-backing small p
 4. HA, quorums, vector clocks, etc.
 
 # Assumptions
-* Secure network
+* Secure network:
   It is assumed that the network is secure. Vagus is not designed to operate over an insecure network.
-* Trusted clients
-  It is assummed that the clients are non-malicious.
-* Synchronized clocks
-  it is assumed that the host clocks are synchronized to a tolerance well below any timeouts used in the messages. NTP is sufficient. Cron-driven 'rdate' is not recommended.
+* Trusted clients:
+  It is assumed that the clients are non-malicious.
+* Synchronized clocks:
+  It is assumed that the host clocks are synchronized to a tolerance well below any timeouts used in the messages. NTP is sufficient. Cron-driven 'rdate' is not recommended.
 
 
 # Protocols
@@ -48,16 +48,16 @@ The client protocol is text-based. Vagus acts as a TCP server. The client sends 
 The clients are normally instances. The main operation on the protocol is clients issuing `keepalive` or `keepalivepoll` commands repeatedly in an interval of their of choice.
 
 ### Parameters used in the commands:
-* cluster-identifier
+* cluster-identifier:
   Vagus supports multiple clusters/namespaces. The cluster identifier is chosen by the clients and is typically the service name. Eg. if a client is a WebWaffle service then "webwaffle" would be an obvious cluster name. The identifier cannot contain a colon.
-* instance-identifier
+* instance-identifier:
   The id of the instance. It must be unique within a cluster. The identifier cannot contain a colon.
-* keepalive lifetime
+* keepalive lifetime:
   The valid lifetime of a keepalive expressed in milliseconds.
 * optional: extra information
   If present, this extra information is distributed and is available via the `keepalivepoll` and `poll` commands.
-* vagus-identifier
-  A unique identifier of a vagus. It must be gloablly unique across all clusters. It is typically the hostname.
+* vagus-identifier:
+  A unique identifier of a vagus. It must be globally unique across all clusters. It is typically the hostname.
 
 ### getversion command
 This commands asks the server about the supported protocol version
@@ -174,7 +174,7 @@ Server:
 ```
 
 ### vagushint command
-This command tells Vagus where another vagus may exist. This can be useful if the client has knowledge of networkse wher broadcast/multicast may not reach and are not specified in the Vagus's configuration. Only UDP unicast and TCP can be specified. UDP broadcast and multicast can only be specified in the Vagus configuration file.
+This command tells Vagus where another vagus may exist. This can be useful if the client has knowledge of networks where broadcast/multicast may not reach and are not specified in the Vagus's configuration. Only UDP unicast and TCP can be specified. UDP broadcast and multicast can only be specified in the Vagus configuration file.
 
 Example 1 (UDP on IPv4):
 ```
@@ -332,7 +332,7 @@ Specifies which port listen and send to.
 ### ttl
 Default value: 3
 This option specifies which TTL to set in the generated multicast datagrams.
-For your conveniance these are the normalt use of multicast TTLs:
+For your conveniance these are the normally used values of multicast TTLs:
  * 0: Restricted to the same host. Won't be output by any interface.
  * 1: Restricted to the same subnet. Won't be forwarded by a router.
  * 2..31: Restricted to the same site/organization/department.
@@ -364,7 +364,6 @@ Examples:
 ```
 peer: 192.0.2.7
 peer: 2001:0db8:1::7
-```
 ```
 
 ## Example configuration:
